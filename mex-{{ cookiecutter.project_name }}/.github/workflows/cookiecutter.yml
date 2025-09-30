@@ -79,7 +79,7 @@ jobs:
           git checkout -b cruft/cookiecutter-template-${template_ref}
           cruft update --skip-apply-ask
           printf '# Changes\n\n- bumped cookiecutter template to %s/commit/%s\n' "$template_url" "$template_ref" > .cruft-pr-body
-          sed -i "/^### Changes/ {
+          sed -i "/^## Changes/ {
           a\\
           - bumped cookiecutter template to %s/commit/%s
           q
