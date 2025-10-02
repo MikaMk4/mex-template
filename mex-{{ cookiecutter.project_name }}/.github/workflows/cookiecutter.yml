@@ -8,6 +8,10 @@ on:
     - cron: "14 3 * * 1-5"
   workflow_dispatch:
 
+concurrency:
+  group: {% raw %}${{ github.workflow }}{% endraw %}
+  cancel-in-progress: true
+
 env:
   PIP_DISABLE_PIP_VERSION_CHECK: on
   PIP_NO_CLEAN: on
@@ -24,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          token: ${{ secrets.WORKFLOW_TOKEN }}
+          {% raw %}token: ${{ secrets.WORKFLOW_TOKEN }}{% endraw %}
 
       - name: Cache requirements
         uses: actions/cache@v4
@@ -32,7 +36,7 @@ jobs:
           cache-name: cache-requirements
         with:
           path: ~/.cache/pip
-          key: ${{ env.cache-name }}-${{ hashFiles('requirements.txt') }}
+          {% raw %}key: ${{ env.cache-name }}-${{ hashFiles('requirements.txt') }}{% endraw %}
           restore-keys: |
             {% raw %}${{ env.cache-name }}-{% endraw %}
 
@@ -46,10 +50,10 @@ jobs:
 
       - name: Configure git
         env:
-          MEX_BOT_EMAIL: ${{ vars.MEX_BOT_EMAIL }}
-          MEX_BOT_USER: ${{ vars.MEX_BOT_USER }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_PUB: ${{ secrets.SIGNING_PUB }}
+          {% raw %}MEX_BOT_EMAIL: ${{ vars.MEX_BOT_EMAIL }}{% endraw %}
+          {% raw %}MEX_BOT_USER: ${{ vars.MEX_BOT_USER }}{% endraw %}
+          {% raw %}SIGNING_KEY: ${{ secrets.SIGNING_KEY }}{% endraw %}
+          {% raw %}SIGNING_PUB: ${{ secrets.SIGNING_PUB }}{% endraw %}
         run: |
           {% raw -%}
           eval "$(ssh-agent -s)"
@@ -58,7 +62,7 @@ jobs:
 
       - name: Update template
         env:
-          GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          {% raw %}GH_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}{% endraw %}
         run: |
           {% raw -%}
           if cruft check; then
