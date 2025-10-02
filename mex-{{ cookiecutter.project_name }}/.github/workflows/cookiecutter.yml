@@ -84,7 +84,6 @@ jobs:
           - bumped cookiecutter template to %template_url/commit/$template_ref
           q
           }" "CHANGELOG.md"
-          echo Appended to CHANGELOG.md
           if [[ $(find . -type f -name "*.rej" | wc -l) -ne 0 ]]; then
             printf '\n# Conflicts\n' >> .cruft-pr-body
           fi
