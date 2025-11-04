@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - start type-checking tests folder by default
 - update security policy ahead of major releases
 - changes in tests directory trigger mypy pre-commit hook
-- test
 
 ### Changes
 
