@@ -25,8 +25,6 @@ jobs:
             exit 0;
           fi
 
-
-
           if git diff --quiet "origin/${{ github.base_ref }}"...HEAD -- "CHANGELOG.md"; then
             echo "Error: The CHANGELOG.md has not been modified."
             echo "Please add your changes to CHANGELOG.md before merging."
